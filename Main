@@ -1,1 +1,256 @@
-deneme
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <string.h>
+#include<stdio.h>
+#include<string.h>
+#include <windows.h>
+#include<ctype.h>
+#include<time.h>
+#include<string.h>
+#include<conio.h>
+
+ //ARROW KEYS--özel tuşlar...
+#define LEFT 75
+#define RIGHT 77
+#define UP 72
+#define DOWN 80
+
+# define INSERT1 120 // X
+# define INSERT2 121 // Y
+# define YARDIM 63 //?
+
+# define KAYDET 43 //+
+
+# define FKAYDET 45 //-
+
+# define CIKIS1 46 // .
+# define CIKIS2 34 // "
+
+# define BACKSPACE 8 
+
+# define BILGI 61 // =
+
+
+struct dllist
+{
+int no,vize,final;
+float gn;
+char kelime[20];
+struct dllist *on,*arka;
+
+};
+struct dllist2
+{
+
+float notu;
+char ad[20];
+
+};
+
+ static dllist *bas,*son;
+
+ void elemanekle(struct dllist *ct)
+{
+
+struct dllist *p;
+
+if(bas==NULL)
+{
+bas=ct;
+ct->arka=NULL;
+ct->on=NULL;
+return;
+}
+else
+for(p=bas;p->arka!=NULL;p=p->arka);
+p->arka=ct;
+ct->on=p;
+ct->arka=NULL;
+
+}
+
+ 
+
+void listele()
+{
+struct dllist *p;
+p=bas;int s=0;
+do
+{
+ s++;
+printf("%d. eleman \n ad:%s \n",s,p->kelime);
+printf(" no: %d \n",p->no);
+printf(" vize: %d \n",p->vize);
+printf(" final: %d \n",p->final);
+printf(" ortalama: %f \n",p->gn);
+p=p->arka;
+
+}while(p!=NULL);
+
+}
+ 
+
+void notsirala()
+{
+struct dllist *q;
+struct dllist2 notu[50],noty;
+int r=0,i,j;
+
+for(q=bas;q!=NULL;q=q->arka)
+{
+r++;
+strcpy(notu[r].ad,q->kelime);
+notu[r].notu=q->gn;
+}
+
+for(i=1;i<=r;i++)
+for(j=i+1;j<=r;j++)
+
+if(notu[i].notu<notu[j].notu)
+{
+noty=notu[i];
+notu[i]=notu[j];
+notu[j]=noty;
+}
+
+for(i=1;i<=r;i++)
+{
+printf("%d. eleman\n ad:%s\n",i,notu[i].ad);
+printf("not:%f",notu[i].notu);
+
+} 
+
+}
+ 
+
+void arayaekle(struct dllist *p)
+{
+struct dllist *q,*once;
+
+ if(bas==NULL)
+ {
+  bas=p;
+p->arka=NULL;
+p->on=NULL;
+return;
+}
+
+for(q=bas;q!=NULL;q=q->arka)
+
+ if(strcmp(p->kelime,q->kelime)==-1)
+ {once=q->on;
+  break;
+ }
+
+ if(q->on!=NULL&&q->arka!=NULL)
+ {
+ 
+ p->on=once;
+ p->arka=q;
+ q->on=p;
+ once->arka=p;
+ return;
+  }
+
+if(q->on==NULL)
+ {
+ q->on=p;
+ p->on=NULL;
+ p->arka=q;
+ bas=p;return;
+ }
+ if(q->arka==NULL)
+ {
+ q->arka=p;
+ p->arka=NULL;
+ p->on=son;
+ son=p;return;
+ }
+ }
+
+ 
+void sil(int e)
+{
+struct dllist *ogr;
+for(ogr=bas;ogr->arka==NULL;ogr=ogr->arka)
+if(ogr->no==e)
+break;
+if(ogr->on==NULL)
+bas=ogr->arka;
+else if(ogr->arka==NULL)
+ogr->on->arka=NULL;
+else
+{
+ogr->on->arka=ogr->arka;
+ogr->arka->on=ogr->on;
+}
+} 
+ 
+ 
+
+int main()
+{
+int sec,a;
+float ort;
+struct dllist *m;
+do
+{
+
+      printf("\n 1. eleman ekle");
+      printf("\n 2. listele");
+      printf("\n 3. ada göre sıralı ekle");
+    printf("\n 4. ortalamaya göre sırala");
+    printf("\n 5. Numaraya göre eleman silme");
+ 
+      printf("\n 6. ‡kŸ");
+      printf("\nseciminiz: ");
+      scanf("%d", &sec);
+   switch(sec)
+
+   {
+  
+   case 1:
+    m=(struct dllist *)malloc(sizeof(dllist));
+    printf("ad giriniz: ");
+    scanf("%s",&m->kelime);
+    printf("no giriniz: ");
+    scanf("%d",&m->no);
+      printf("vize giriniz: ");
+    scanf("%d",&m->vize);
+      printf("final giriniz: ");
+    scanf("%d",&m->final);
+ort=float(0.4*m->vize+0.6*m->final);
+    m->gn=ort;
+    elemanekle(m);
+    break;
+   case 2:
+    listele();
+    break;
+  
+   case 3:
+    m=(struct dllist *)malloc(sizeof(dllist));
+    printf("ad giriniz: ");
+    scanf("%s",&m->kelime);
+    printf("no giriniz: ");
+    scanf("%d",&m->no);
+      printf("vize giriniz: ");
+    scanf("%d",&m->vize);
+      printf("final giriniz: ");
+    scanf("%d",&m->final);
+    ort=float(0.4*m->vize+0.6*m->final);
+    m->gn=ort;
+    arayaekle(m);
+    break;
+   case 4:
+    notsirala();
+    break;
+   case 5:
+    printf("\nKaydını silmek istediğiniz öğrencinin numarasını giriniz");
+    scanf("%d",&a);
+   sil(a);
+   case 6:exit(0);
+  
+   }
+}while(1);
+}
