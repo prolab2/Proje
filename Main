@@ -44,9 +44,19 @@ int a=0;
 int y=0;
  int x=0;
  //FONKSİYONLAR
+ static int get_code(void);
  void git(int x, int y); // imleç hareketi için.
  void yon();
  void yardim();
+ enum
+{
+    KEY_ESC     = 27,
+    ARROW_UP    = 256 + 72,
+    ARROW_DOWN  = 256 + 80,
+    ARROW_LEFT  = 256 + 75,
+    ARROW_RIGHT = 256 + 77
+};
+
 
 int main(){
    system("color 70");//Renk:beyaz
@@ -78,13 +88,48 @@ int main(){
 		yeni->kelime=getch();
         yeni->sonra=NULL;
         /*Yeni alınan bilgilerden sonra hiç bi eleman olmadığı için NULL yapıldı*/
+   
+      
         ilk=yeni;
         son=yeni;
+      
         /*Dügüm için alınan ilk eleman olduğundan yeni ve son ilke eşitlendi*/
         char kelime=(char)kelime;
+        while (( yeni->kelime = get_code()) != KEY_ESC )
+    {  
+        if(yeni->kelime==ARROW_UP)
+         {if(y!=1)
+         {
+         y--;
+            git(x,y);
+            }
+        } 
+                else if (yeni->kelime==ARROW_DOWN)
+         {
+                 y++;
+                 git(x,y);
+         }
+            
+        else if(yeni->kelime==ARROW_LEFT)
+            {
+            if(x!=1){
+            
+                        x--;
+            git(x,y);
+          }
+			    }
+        else if (yeni->kelime==ARROW_RIGHT)
+             {
+             x++;
+            git(x,y);
+                }
+        }
+    
+    getchar();   // wait
         printf("%c",yeni->kelime);
         a++;
         yon();
+      
        if(yeni->kelime==BILGI){
 git(3,22);
 printf("%d karakterlidir.",x-1);
@@ -210,5 +255,14 @@ void yardim(){
      git(4,21);
      printf("\"ESC\" kullaniniz.");
 }
-	
+	}
+	static int get_code(void)
+{
+    int ch;
+        ch = getch();
+
+    if (ch == 0 || ch == 224)
+        ch = 256 + getch();
+
+    return ch;
 }
