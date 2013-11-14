@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <conio.h>
-#include <string.h>
 #include<stdio.h>
 #include<string.h>
 #include <windows.h>
@@ -31,226 +27,188 @@
 
 # define BILGI 61 // =
 
-
-struct dllist
+typedef struct kisi
 {
-int no,vize,final;
-float gn;
-char kelime[20];
-struct dllist *on,*arka;
+        int kelime;
+        struct kisi *sonra;
+        /*Bu pointera sürekli bir sonraki structı gösterecek olan adres atanacak.
+          Bu sayede her struct kendinden sonraki structun bellekte
+        nerede olduğunu bilecek*/
+        struct kisi *once;
+        /*Bu pointera sürekli bir onceki structı gösterecek olan adres atanacak.
+          Bu sayede her struct kendinden onceki structun bellekte
+        nerede olduğunu bilecek*/
+}b;
+struct kisi *yeni , *ilk , *son;/*struct kisi tipinde yeni , ilk ve son isminde tanımlamalar yaptık.*/
+int a=0;
+int y=0;
+ int x=0;
+ //FONKSİYONLAR
+ void git(int x, int y); // imleç hareketi için.
+ void yon();
+ void yardim();
 
-};
-struct dllist2
-{
+int main(){
+   system("color 70");//Renk:beyaz
+      system ("title Metin Editörü");//Başlık
+  selam:
+  int adet=0;
+   
+   yeni=NULL;
+    ilk=NULL;
+    son=NULL;
+     git(1,1);
+     
+ if(ilk==NULL)/*Dugumde eleman var mı?*/
+     {
+       /*Dugumde eleman yoksa ilk=NULL olacaktır.*/
+        struct kisi *yeni = ((kisi *) malloc(sizeof(kisi)));
+        git(1,18);
+		printf("______________________________________________________________________\n");
+		printf("/Yardim almak icin ? ni giriniz.../");
+		git(0,0);
+		struct kisi *ara;
+   /*struct kisi tipinde ara isminde bir tip tanımladık*/
 
-float notu;
-char ad[20];
-
-};
-
- static dllist *bas,*son;
-
- void elemanekle(struct dllist *ct)
-{
-
-struct dllist *p;
-
-if(bas==NULL)
-{
-bas=ct;
-ct->arka=NULL;
-ct->on=NULL;
-return;
+        /*struct kisi tipinde yeni tanımladık ve bellekten structın boyutu kadar yer aldık*/
+        printf("\nMetin Alani:");
+        do{
+        x++;
+        git(x+12,1);
+		yeni->kelime=getch();
+        yeni->sonra=NULL;
+        /*Yeni alınan bilgilerden sonra hiç bi eleman olmadığı için NULL yapıldı*/
+        ilk=yeni;
+        son=yeni;
+        /*Dügüm için alınan ilk eleman olduğundan yeni ve son ilke eşitlendi*/
+        char kelime=(char)kelime;
+        printf("%c",yeni->kelime);
+        a++;
+        yon();
+       if(yeni->kelime==BILGI){
+git(3,22);
+printf("%d karakterlidir.",x-1);
 }
-else
-for(p=bas;p->arka!=NULL;p=p->arka);
-p->arka=ct;
-ct->on=p;
-ct->arka=NULL;
+        	if(yeni->kelime == YARDIM){
+	system("cls");
+	git(1,1);
+	 printf("**** YARDİM KUTUSU ? ****");
+	 git(2,3);
+	 printf("1) Silmek icin backspace i ,");
+	 git(2,5);
+	  printf("2) insert icin x ve y tusuna birlikte ,");
+	  git(2,7);
+	  printf("3) Kaydetmek icin + ,Farkli kaydetmek icin - yi ,");
+	   git(2,9);
+	   printf("4) İmlecin bulundugu satirin sayisini , toplam satir sayisini ve toplam karakt\ter sayisini ekrana yazmak icin '=' i,");
+	 git(2,13);
+     printf("Menude hareket icin;");
+     git(6,15);
+     putchar(24);
+     git(6,17);
+     putchar(25);
+     git(7,16);
+     putchar(26);
+     git(5,16);
+     putchar(27);
+     git(10,15);
+     printf("Yon Tuslarini");
+     git(11,17);
+     printf("kullaniniz.");
+     git(2,19);
+     printf("Cikis icin;");
+     git(4,21);
+     printf("'.' ve tirnak isaretine birlikte basin.\n\n ");
+     printf("Tekrar metin editorune geri donmek icin herhangi bir tusa basin.");
+     getch();
+     system("cls");
+     git(1,1);
+     goto selam;
 
-}
-
- 
-
-void listele()
-{
-struct dllist *p;
-p=bas;int s=0;
-do
-{
- s++;
-printf("%d. eleman \n ad:%s \n",s,p->kelime);
-printf(" no: %d \n",p->no);
-printf(" vize: %d \n",p->vize);
-printf(" final: %d \n",p->final);
-printf(" ortalama: %f \n",p->gn);
-p=p->arka;
-
-}while(p!=NULL);
-
-}
- 
-
-void notsirala()
-{
-struct dllist *q;
-struct dllist2 notu[50],noty;
-int r=0,i,j;
-
-for(q=bas;q!=NULL;q=q->arka)
-{
-r++;
-strcpy(notu[r].ad,q->kelime);
-notu[r].notu=q->gn;
-}
-
-for(i=1;i<=r;i++)
-for(j=i+1;j<=r;j++)
-
-if(notu[i].notu<notu[j].notu)
-{
-noty=notu[i];
-notu[i]=notu[j];
-notu[j]=noty;
-}
-
-for(i=1;i<=r;i++)
-{
-printf("%d. eleman\n ad:%s\n",i,notu[i].ad);
-printf("not:%f",notu[i].notu);
-
-} 
-
-}
- 
-
-void arayaekle(struct dllist *p)
-{
-struct dllist *q,*once;
-
- if(bas==NULL)
- {
-  bas=p;
-p->arka=NULL;
-p->on=NULL;
-return;
 }
 
-for(q=bas;q!=NULL;q=q->arka)
 
- if(strcmp(p->kelime,q->kelime)==-1)
- {once=q->on;
-  break;
- }
-
- if(q->on!=NULL&&q->arka!=NULL)
- {
+        
+         if(yeni->kelime==CIKIS1){
  
- p->on=once;
- p->arka=q;
- q->on=p;
- once->arka=p;
- return;
-  }
-
-if(q->on==NULL)
- {
- q->on=p;
- p->on=NULL;
- p->arka=q;
- bas=p;return;
- }
- if(q->arka==NULL)
- {
- q->arka=p;
- p->arka=NULL;
- p->on=son;
- son=p;return;
- }
- }
-
- 
-void sil(int e)
-{
-struct dllist *ogr;
-for(ogr=bas;ogr->arka==NULL;ogr=ogr->arka)
-if(ogr->no==e)
-break;
-if(ogr->on==NULL)
-bas=ogr->arka;
-else if(ogr->arka==NULL)
-ogr->on->arka=NULL;
-else
-{
-ogr->on->arka=ogr->arka;
-ogr->arka->on=ogr->on;
-}
-} 
- 
- 
-
-int main()
-{
-int sec,a;
-float ort;
-struct dllist *m;
-do
-{
-
-      printf("\n 1. eleman ekle");
-      printf("\n 2. listele");
-      printf("\n 3. ada göre sıralı ekle");
-    printf("\n 4. ortalamaya göre sırala");
-    printf("\n 5. Numaraya göre eleman silme");
- 
-      printf("\n 6. ‡kŸ");
-      printf("\nseciminiz: ");
-      scanf("%d", &sec);
-   switch(sec)
-
-   {
+   int tus2=getch();
+   if(tus2==CIKIS2)
+  return 0;
   
-   case 1:
-    m=(struct dllist *)malloc(sizeof(dllist));
-    printf("ad giriniz: ");
-    scanf("%s",&m->kelime);
-    printf("no giriniz: ");
-    scanf("%d",&m->no);
-      printf("vize giriniz: ");
-    scanf("%d",&m->vize);
-      printf("final giriniz: ");
-    scanf("%d",&m->final);
-ort=float(0.4*m->vize+0.6*m->final);
-    m->gn=ort;
-    elemanekle(m);
-    break;
-   case 2:
-    listele();
-    break;
+}
+    }while(yeni->kelime!=UP&&yeni->kelime!=LEFT);
+     }
+     else
+     {
+        struct kisi *yeni = ((kisi *) malloc(sizeof(kisi)));
+        /*struct kisi tipinde yeni tanımladık ve bellekten structın boyutu kadar yer aldık*/
+        printf("\nMetin Alanı:");
+        do{
+        x++;
+        git(x+12,1);
+		yeni->kelime=getch();
+        yeni->sonra=NULL;  
+        /*Yeni alınan bilgilerden sonra hiç bi eleman olmadığı için NULL yapıldı*/
+        son->sonra=yeni;
+        /*Bi önceki structun sonra adindaki göstericisi yeniye eşitlendi*/
+        yeni->once=son;/*Tek yönlü bağlı liste oluşturmadan tek farkı*/
+        /*Su an oluşturulmuş olan structun once adindaki gostericisi bir onceki structa eşitlendi*/
+        son=yeni; 
+        /*Son adındaki struct artık yeni structı oldu.
+        Bunun yapılmasındaki amac 
+        yeni bir dugum ekleneceginde en son hangi structın eklendigini bilmek
+        en son eklenen structun sonrasını yeni structına esitlemek 
+        yeni oluşturulan structun once adındaki gostericisini sona eşitlemek.*/
+        char kelime=(char)kelime;
+        a++;
+        printf("%c",yeni->kelime);
+       
   
-   case 3:
-    m=(struct dllist *)malloc(sizeof(dllist));
-    printf("ad giriniz: ");
-    scanf("%s",&m->kelime);
-    printf("no giriniz: ");
-    scanf("%d",&m->no);
-      printf("vize giriniz: ");
-    scanf("%d",&m->vize);
-      printf("final giriniz: ");
-    scanf("%d",&m->final);
-    ort=float(0.4*m->vize+0.6*m->final);
-    m->gn=ort;
-    arayaekle(m);
-    break;
-   case 4:
-    notsirala();
-    break;
-   case 5:
-    printf("\nKaydını silmek istediğiniz öğrencinin numarasını giriniz");
-    scanf("%d",&a);
-   sil(a);
-   case 6:exit(0);
   
-   }
-}while(1);
+
+        
+    }while(yeni->kelime!=UP&&yeni->kelime!=LEFT);
+     }
+     
+
+
+	getch();
+}
+ void git(int x, int y) //imlece hareket veriyor ok tuşu için...
+{
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+void yon()
+{
+
+
+}
+
+void yardim(){
+	
+	if(yeni->kelime == YARDIM){
+	system("cls");
+	 git(2,13);
+     printf("Menude hareket icin;");
+     git(6,15);
+     putchar(24);
+     git(6,17);
+     putchar(25);
+     git(7,16);
+     putchar(26);
+     git(5,16);
+     putchar(27);
+     git(10,15);
+     printf("Yon Tuslarini");
+     git(11,17);
+     printf("kullaniniz.");
+     git(2,19);
+     printf("Ana menuye donus icin;");
+     git(4,21);
+     printf("\"ESC\" kullaniniz.");
+}
+	
 }
