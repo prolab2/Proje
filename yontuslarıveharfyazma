@@ -2,8 +2,6 @@
 yon tuslari ve yazı yazma aynı anda yapabilior
  geç oldugu ıcın  yardım secenegıni falan yarın eklicem
  bu sade hali
- bide kucukharf yazın sadece rakam ve buyukharfyazmayın cunku a dan zye kadar yaptım printfin ıcını onu ifle && kullanarak
- buyuk harf ve rakamların ascisini ekleriz
 */
 #include<conio.h>
 #include <stdio.h>
@@ -97,7 +95,10 @@ static int get_code(void)
         son=yeni;
         /*Dügüm için alınan ilk eleman olduğundan yeni ve son ilke eşitlendi*/
         char kelime=(char)kelime;
+         if(ch>=97&&ch<=122)// burda 97 122 a ile z arasındaki sayılar bunu deiştitrbilrz
+        {
         printf("%c",yeni->kelime);
+   }
         a++;
 }
 
