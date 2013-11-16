@@ -1,0 +1,222 @@
+/*
+yon tuslari ve yazı yazma aynı anda yapabilior
+ geç oldugu ıcın  yardım secenegıni falan yarın eklicem
+ bu sade hali
+*/
+
+#include <stdio.h>
+#include<string.h>
+#include <windows.h>
+#include<ctype.h>
+#include<time.h>
+#include<conio.h>
+#define INSERT1 120 // X
+#define INSERT2 121 // Y
+#define YARDIM 63 //?
+#define KAYDET 43 //+
+#define FKAYDET 45 //-
+#define CIKIS1 46 // .
+#define CIKIS2 34 // "
+#define BACKSPACE 8 
+#define BILGI 61 // =
+#define   KEY_ESC     27
+#define   ARROW_UP    256 + 72
+#define  ARROW_DOWN  256 + 80
+#define  ARROW_LEFT  256 + 75
+#define  ARROW_RIGHT 256 + 77
+void listele();
+static int get_code();
+void git(int x, int y); 
+void yardim();
+typedef struct kisi
+{
+        int kelime;
+        struct kisi *sonra;
+        /*Bu pointera sürekli bir sonraki structı gösterecek olan adres atanacak.
+          Bu sayede her struct kendinden sonraki structun bellekte
+        nerede olduğunu bilecek*/
+        struct kisi *once;
+        /*Bu pointera sürekli bir onceki structı gösterecek olan adres atanacak.
+          Bu sayede her struct kendinden onceki structun bellekte
+        nerede olduğunu bilecek*/
+}b;
+struct kisi *yeni , *ilk , *son;/*struct kisi tipinde yeni , ilk ve son isminde tanımlamalar yaptık.*/
+// System dependent key codes
+
+
+
+int main(void)
+{	int a=0;
+    int ch;
+	int sayacx,sayacy;
+    int x,y;
+	git(1,1);   
+   
+    while (( ch = get_code()) != KEY_ESC )
+    { 
+    
+    
+        if(ch==ARROW_UP)
+         {if(y!=1)
+         {
+         y--;
+    	git(x,y);
+    	}
+        } 
+		else if (ch==ARROW_DOWN)
+         {
+         	y++;
+         	git(x,y);
+         }
+            
+        else if(ch==ARROW_LEFT)
+            {
+            
+			x--;
+            git(x,y);
+        	}
+        else if (ch==ARROW_RIGHT)
+             {
+             x++;
+            git(x,y);
+        	}
+        }
+    
+    getchar();   // wait
+    return 0;
+}
+int a=0;
+static int get_code(void)
+{
+   int ch = getch();
+	if(ch == YARDIM)
+{ yardim();}	
+	if(ch == BILGI)
+{
+	git(3,22);
+printf("%d karakterlidir.",a);
+git(1,1);
+}
+	if(ilk==NULL)
+
+ {
+ struct kisi *yeni = ((kisi *) malloc(sizeof(kisi)));
+ git(1,1);
+ yeni->kelime=ch;
+ yeni->sonra=NULL;
+        /*Yeni alınan bilgilerden sonra hiç bi eleman olmadığı için NULL yapıldı*/
+        ilk=yeni;
+        son=yeni;
+        /*Dügüm için alınan ilk eleman olduğundan yeni ve son ilke eşitlendi*/
+        char kelime=(char)kelime;
+         if(ch>=97&&ch<=122)// burda 97 122 a ile z arasındaki sayılar bunu deiştitrbilrz
+        {
+        printf("%c",yeni->kelime);
+   }a++;
+        
+}
+
+else
+{
+	struct kisi *yeni = ((kisi *) malloc(sizeof(kisi)));
+	yeni->kelime=ch;
+	yeni->sonra=NULL;  
+        /*Yeni alınan bilgilerden sonra hiç bi eleman olmadığı için NULL yapıldı*/
+        son->sonra=yeni;
+        /*Bi önceki structun sonra adindaki göstericisi yeniye eşitlendi*/
+        yeni->once=son;/*Tek yönlü bağlı liste oluşturmadan tek farkı*/
+        /*Su an oluşturulmuş olan structun once adindaki gostericisi bir onceki structa eşitlendi*/
+        son=yeni; 
+        /*Son adındaki struct artık yeni structı oldu.
+        Bunun yapılmasındaki amac 
+        yeni bir dugum ekleneceginde en son hangi structın eklendigini bilmek
+        en son eklenen structun sonrasını yeni structına esitlemek 
+        yeni oluşturulan structun once adındaki gostericisini sona eşitlemek.*/
+        char kelime=(char)kelime;
+        a++;
+   if(ch>=97&&ch<=122)// burda 97 122 a ile z arasındaki sayılar bunu deiştitrbilrz
+        {
+        printf("%c",yeni->kelime);
+   }
+}
+    if (ch == 0 || ch == 224)
+        ch = 256 + getch();
+    return ch;
+    a++;
+}
+
+
+void git(int x, int y) //imlece hareket veriyor ok tuşu için...
+{
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+
+
+
+
+
+
+
+
+        
+  void yardim() 
+	   {
+	    
+        git(1,1);
+         printf("**** YARDİM KUTUSU ? ****");
+         git(2,3);
+         printf("1) Silmek icin backspace i ,");
+         git(2,5);
+          printf("2) insert icin x ve y tusuna birlikte ,");
+          git(2,7);
+          printf("3) Kaydetmek icin + ,Farkli kaydetmek icin - yi ,");
+           git(2,9);
+           printf("4) İmlecin bulundugu satirin sayisini , toplam satir sayisini ve toplam karakt\ter sayisini ekrana yazmak icin '=' i,");
+         git(2,13);
+     printf("Menude hareket icin;");
+     git(6,15);
+     putchar(24);
+     git(6,17);
+     putchar(25);
+     git(7,16);
+     putchar(26);
+     git(5,16);
+     putchar(27);
+     git(10,15);
+     printf("Yon Tuslarini");
+     git(11,17);
+     printf("kullaniniz.");
+     git(2,19);
+     printf("Cikis icin;");
+     git(4,21);
+     printf("'.' ve tirnak isaretine birlikte basin.\n\n ");
+     printf("Tekrar metin editorune geri donmek icin herhangi bir tusa basin.");
+     getch();
+    system("cls");
+	 git(1,1);
+     listele();
+ }
+ 
+ /*Kayit listeleme*/
+void listele()/*Tek yönlü bağlı listeyi listeleme ile aynıdır*/
+{
+   struct kisi *ara;
+   /*struct kisi tipinde ara isminde bir tip tanımladık*/
+   
+   /*ara structunu ilk structa eşitledik ve NULL görene kadar dügümde ilerledik*/
+   for(ara=ilk;ara!=NULL;ara=ara->sonra)
+   {
+                  if(ara->kelime>=97 && ara->kelime<=122)
+				  printf("%c",ara->kelime);
+                  
+   }
+   
+   
+   
+
+}
+ 
